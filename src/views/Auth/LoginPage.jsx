@@ -7,8 +7,8 @@ export default function LoginPage() {
       <h1>System Medyczny - Logowanie</h1>
       <p>Wybierz ścieżkę (tymczasowo, dla testów):</p>
       <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-        <Link to="/lekarz">➡️ Panel Lekarza</Link>
-        <Link to="/pacjent">➡️ Panel Pacjenta</Link>
+        <Link to="/lekarz"> Panel Lekarza</Link>
+        <Link to="/pacjent"> Panel Pacjenta</Link>
       </div>
     </div>
   );
