@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function DoctorDashboard() {
+  const navigate = useNavigate();
+
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const role = localStorage.getItem('user_role');
+    if (role !== 'doctor') {
+      navigate('/');
+      return;
+    }
     // ZMIANA 1: Pobieramy z naszego nowego API serverless, a nie json-servera
     fetch('/api/patients')
       .then(response => response.json())
@@ -14,13 +21,32 @@ export default function DoctorDashboard() {
         setLoading(false);
       })
       .catch(error => console.error('Błąd pobierania danych:', error));
-  }, []);
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user_role');
+    localStorage.removeItem('user_name');
+
+    navigate('/');
+  };
 
   return (
     <div style={{ padding: '20px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>Panel Lekarza</h1>
-        <Link to="/">Wyloguj</Link>
+        <button 
+          onClick={handleLogout}
+          style={{ 
+            background: '#ff4d4d', 
+            color: 'white', 
+            border: 'none', 
+            padding: '8px 15px', 
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Wyloguj
+        </button>
       </div>
 
       <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px', background: 'white' }}>
