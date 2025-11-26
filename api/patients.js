@@ -4,8 +4,6 @@ export default async function handler(request, response) {
   const sql = neon(process.env.DATABASE_URL);
 
   try {
-    // Zamiast SELECT * (co pobiera też hasła!), wymień tylko to, co potrzebne.
-    // To wystarczy, żeby prowadzący się nie przyczepił, że "wyciekasz hasła".
     const rows = await sql`
       SELECT id, first_name, last_name, pesel, contact, insurance 
       FROM patients 

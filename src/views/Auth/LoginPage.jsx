@@ -32,6 +32,8 @@ export default function LoginPage() {
         navigate('/lekarz');
       } else if (data.role === 'patient') {
         navigate('/pacjent'); 
+      } else if (data.role === 'admin') {
+        navigate('/admin');
       } else {
         navigate('/');
       }

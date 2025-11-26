@@ -47,6 +47,22 @@ export default async function handler(request, response) {
             }
         }
 
+        const admins = await sql`SELECT * FROM admins WHERE email = ${email}`;
+
+        if (admins.length > 0) {
+            const adm = admins[0];
+            if (adm.password === password) {
+                // zalogowano admin
+                return response.status(200).json({
+                role: 'admin',
+                username: adm.email,
+                id: adm.id
+                });
+            } else {
+                return response.status(401).json({ error: 'Błędne hasło' });
+            }
+        }
+
     return response.status(404).json({ error: 'Nie znaleziono użytkownika o takim emailu' });
     } catch(error) {
         console.error(error);
